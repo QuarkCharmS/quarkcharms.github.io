@@ -1,0 +1,599 @@
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+
+<meta charset="utf-8">
+
+
+
+<!-- begin SEO -->
+
+
+
+
+
+
+
+
+
+<title>OpenShift 4 UPI Bare-Metal Installation (Air-Gapped, Disconnected) - Santiago Velázquez</title>
+
+
+
+
+
+
+
+
+
+
+  <link rel="canonical" href="http://localhost:4000/portfolio/openshift_upi_airgap_portfolio/">
+
+
+
+
+
+  
+
+  
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context" : "http://schema.org",
+      "@type" : "Person",
+      "name" : "Santiago Velázquez",
+      "url" : "http://localhost:4000",
+      "sameAs" : null
+    }
+  </script>
+
+
+
+
+
+
+<!-- end SEO -->
+
+<!-- Open Graph protocol data (https://ogp.me/), used by social media -->
+<meta property="og:locale" content="en-US">
+<meta property="og:site_name" content="Santiago Velázquez"> 
+<meta property="og:title" content="OpenShift 4 UPI Bare-Metal Installation (Air-Gapped, Disconnected)">
+
+
+  <meta property="og:description" name="description" content="Fully air-gapped OpenShift 4.x cluster deployment using UPI on vSphere.">
+
+
+  <meta property="og:url" content="http://localhost:4000/portfolio/openshift_upi_airgap_portfolio/">
+
+
+
+
+
+<!-- end Open Graph protocol -->
+
+<link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="Santiago Velázquez Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://localhost:4000/assets/css/main.css">
+
+<meta http-equiv="cleartype" content="on">
+    
+
+<!-- start custom head snippets -->
+
+<!-- favicon from https://commons.wikimedia.org/wiki/File:OOjs_UI_icon_academic-progressive.svg -->
+<link rel="apple-touch-icon" sizes="180x180" href="http://localhost:4000/images/apple-touch-icon-180x180.png"/>
+<link rel="icon" type="image/svg+xml" href="http://localhost:4000/images/favicon.svg"/>
+<link rel="icon" type="image/png" href="http://localhost:4000/images/favicon-32x32.png" sizes="32x32"/>
+<link rel="icon" type="image/png" href="http://localhost:4000/images/favicon-192x192.png" sizes="192x192"/>
+<link rel="manifest" href="http://localhost:4000/images/manifest.json"/>
+<link rel="icon" href="/images/favicon.ico"/>
+<meta name="theme-color" content="#ffffff"/>
+<link rel="stylesheet" href="http://localhost:4000/assets/css/academicons.css"/>
+
+
+<!-- Support for MatJax -->
+<script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <button><div class="navicon"></div></button>
+        <ul class="visible-links">
+          <li class="masthead__menu-item masthead__menu-item--lg persist"><a href="http://localhost:4000/">Santiago Velázquez</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/portfolio/">Portfolio</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/cv/">CV</a></li>
+          
+          <li id="theme-toggle" class="masthead__menu-item persist tail">
+            <a><i id="theme-icon" class="fa-solid fa-sun" aria-hidden="true" title="toggle theme"></i></a>
+          </li>
+        </ul>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    
+
+
+
+
+
+<div id="main" role="main">
+  
+
+
+  <div class="sidebar sticky">
+  
+
+
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  <div class="author__avatar">
+    
+    	<img src="http://localhost:4000/images/avatar.jpg" class="author__avatar" alt="Santiago Veláquez">
+    
+  </div>
+
+  <div class="author__content">
+    <h3 class="author__name">Santiago Veláquez</h3>
+    
+    <p class="author__bio">Platform DevOps engineer. Formerly serving in the IDF's Matzov Unit.</p>
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      <!-- Font Awesome icons / Biographic information  -->
+      
+        <li class="author__desktop"><i class="fas fa-fw fa-location-dot icon-pad-right" aria-hidden="true"></i>Tel Aviv, Israel</li>
+      
+      
+        <li class="author__desktop"><i class="fas fa-fw fa-building-columns icon-pad-right" aria-hidden="true"></i>Open to opportunitties</li>
+      
+      
+      
+        <li><a href="mailto:santivelazqueziusim@gmail.com"><i class="fas fa-fw fa-envelope icon-pad-right" aria-hidden="true"></i>Email</a></li>
+      
+
+      <!-- Font Awesome and Academicons icons / Academic websites -->
+      
+            
+      
+      
+      
+      
+                              
+      
+      
+
+      <!-- Font Awesome icons / Repositories and software development -->
+      
+            
+            
+      
+        <li><a href="https://github.com/QuarkCharmS"><i class="fab fa-fw fa-github icon-pad-right" aria-hidden="true"></i>GitHub</a></li>
+      
+            
+            
+
+      <!-- Font Awesome icons / Social media -->
+      
+      
+            
+      
+                  
+                  
+      
+            
+            
+      
+        <li><a href="https://www.linkedin.com/in/santiago-velazquez-iusim"><i class="fab fa-fw fa-linkedin icon-pad-right" aria-hidden="true"></i>LinkedIn</a></li>
+            
+      
+            
+                  
+            
+      
+            
+            
+      
+              
+      
+                      
+      
+      
+            
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="OpenShift 4 UPI Bare-Metal Installation (Air-Gapped, Disconnected)">
+    <meta itemprop="description" content="Fully air-gapped OpenShift 4.x cluster deployment using UPI on vSphere.">
+    
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 class="page__title" itemprop="headline">OpenShift 4 UPI Bare-Metal Installation (Air-Gapped, Disconnected)
+</h1>
+          
+        
+        
+            
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        <hr />
+<p>This is a real-world deployment of an OpenShift 4.x cluster using the User-Provisioned Infrastructure (UPI) method on vSphere in a fully air-gapped (disconnected) environment. The installation was completed without any internet access inside the cluster network, using mirrored images and packages transferred via USB drives into the internal network.</p>
+
+<h2 id="cluster-topology">Cluster Topology</h2>
+
+<p><img src="/images/OPENSHIFT-DIAGRAM.png" alt="Openshift Cluster Diagram" /></p>
+
+<ul>
+  <li>1 Bastion Node (external + internal)</li>
+  <li>1 Bootstrap Node</li>
+  <li>3 Master Nodes</li>
+  <li>3 Worker Nodes</li>
+  <li>2 Infra Nodes (labeled workers)</li>
+  <li>2 HAProxy Nodes for external load balancing and high availability</li>
+</ul>
+
+<p>Each node had static IP addresses in the 192.168.66.0/24 range.</p>
+
+<h2 id="tools-and-dependencies">Tools and Dependencies</h2>
+
+<ul>
+  <li>OpenShift tools: openshift-install, oc, and kubectl</li>
+  <li>All required container images mirrored using oc mirror</li>
+  <li>Internal container registry deployed using Project Quay’s web-based config container</li>
+  <li>RHEL packages downloaded with reposync and turned into an internal YUM repo</li>
+  <li>Apache HTTP server to serve Ignition configs</li>
+  <li>Bind for DNS</li>
+  <li>HAProxy nodes for API and Ingress load balancing with high availability</li>
+  <li>Keepalived for VIP failover between HAProxy nodes</li>
+  <li>Custom certificates for HAProxy frontends (verified with an internal CA)</li>
+  <li>Special DNS names for Ingress, the OpenShift API, and cluster applications like the web console (provided by internal IT department)</li>
+</ul>
+
+<p>All dependencies were mirrored outside the closed network and moved into it via USB drives.</p>
+
+<h2 id="mirror-registry-setup-air-gapped-quay-ui-based">Mirror Registry Setup (Air-Gapped, Quay UI-Based)</h2>
+
+<p>To support the disconnected installation, we mirrored OpenShift content in a connected environment using oc mirror, transferred the content via USB into the internal network, and deployed a local container registry using Project Quay’s UI-based config container.</p>
+
+<h3 id="process-overview">Process Overview</h3>
+
+<ol>
+  <li>In the connected environment:
+    <ul>
+      <li>Ran
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>oc mirror --dest-dir=ocp-mirror \
+quay.io/openshift-release-dev/ocp-release:4.12.10-x86_64 \
+--docker-config-json=pull-secret.json
+ 
+</code></pre></div>        </div>
+      </li>
+      <li>Saved the Quay image:
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>podman pull quay.io/projectquay/quay
+podman save -o quay.tar quay.io/projectquay/quay
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p>Moved all data (mirror archive + quay image) into the air-gapped network via USB.</p>
+  </li>
+  <li>In the air-gapped environment:
+    <ul>
+      <li>Loaded the Quay image:
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>podman load -i quay.tar
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>Started the Quay config container:
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>podman run -d --name quay-config -p 8080:8080 quay.io/projectquay/quay config secret-pass
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Opened http://<bastion-ip>:8080 in a browser and logged in as quayconfig / secret-pass</bastion-ip></p>
+  </li>
+  <li>
+    <p>Completed the web-based setup (DB, storage, credentials) and downloaded quay-config.tar.gz</p>
+  </li>
+  <li>Deployed the actual registry:
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mkdir -p quay/{config,storage}
+tar -xzvf quay-config.tar.gz -C quay/config
+
+podman run -d --rm --name quay      -p 5000:8443      -v $PWD/quay/config:/conf/stack:Z      -v $PWD/quay/storage:/datastorage:Z      quay.io/projectquay/quay:latest
+</code></pre></div>    </div>
+  </li>
+  <li>Finally, mirrored into it:
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>oc mirror --from=./ocp-mirror docker://localhost:5000
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<p>Once the cluster was installed, the temporary local Quay registry was removed.</p>
+
+<h2 id="infrastructure-services">Infrastructure Services</h2>
+
+<p>All supporting services were manually deployed:</p>
+
+<ul>
+  <li>Apache HTTP (httpd) served Ignition files over port 8080</li>
+  <li>DNS forward and reverse zones, including special records for the OpenShift API, Ingress, and applications, were provided by the internal IT team.</li>
+  <li>Two HAProxy nodes were deployed for external API and Ingress load balancing with high availability</li>
+  <li>Keepalived handled virtual IP failover between the HAProxy nodes</li>
+  <li>Custom certificates were generated and configured on the HAProxy frontends to secure API and Ingress traffic</li>
+  <li>Chrony provided internal NTP synchronization</li>
+  <li>All IP addresses were manually configured on each node using <code class="language-plaintext highlighter-rouge">nmtui</code>; no DHCP server was used.</li>
+</ul>
+
+<h2 id="installation-flow">Installation Flow</h2>
+
+<h3 id="step-1-generate-install-configuration">Step 1: Generate Install Configuration</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>openshift-install create install-config
+openshift-install create manifests
+openshift-install create ignition-configs
+</code></pre></div></div>
+
+<p>Copy .ign files to Apache directory:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cp *.ign /var/www/html/
+chmod a+r /var/www/html/*.ign
+</code></pre></div></div>
+
+<h3 id="step-2-bootstrap-node">Step 2: Bootstrap Node</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>coreos-installer install --copy-network --insecure-ignition \
+  --ignition-url=http://&lt;bastion&gt;:8080/bootstrap.ign /dev/sda
+</code></pre></div></div>
+
+<p>Then from Bastion:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>openshift-install --dir=./ wait-for bootstrap-complete
+</code></pre></div></div>
+
+<h3 id="step-3-masters">Step 3: Masters</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>coreos-installer install --copy-network --insecure-ignition \
+  --ignition-url=http://&lt;bastion&gt;:8080/master.ign /dev/sda
+</code></pre></div></div>
+
+<p>After all 3 masters are up:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>openshift-install --dir=./ wait-for install-complete
+</code></pre></div></div>
+
+<h3 id="step-4-workers-and-infra-nodes">Step 4: Workers and Infra Nodes</h3>
+
+<p>Same procedure with worker.ign:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>coreos-installer install --copy-network --insecure-ignition \
+  --ignition-url=http://&lt;bastion&gt;:8080/worker.ign /dev/sda
+</code></pre></div></div>
+
+<p>Then (for infra nodes):</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>oc label node &lt;node-name&gt; node-role.kubernetes.io/infra=""
+</code></pre></div></div>
+
+<h3 id="step-5-reuse-bootstrap-node-optional">Step 5: Reuse Bootstrap Node (Optional)</h3>
+
+<p>If reusing bootstrap as worker:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>oc delete node &lt;bootstrap-name&gt;
+coreos-installer install --copy-network \
+  --ignition-url=http://&lt;bastion&gt;:8080/worker.ign /dev/sda
+</code></pre></div></div>
+
+<h3 id="step-6-configure-haproxy-nodes">Step 6: Configure HAProxy Nodes</h3>
+
+<p>After cluster nodes were online, two dedicated HAProxy nodes were configured to provide external load balancing for the OpenShift API and Ingress. Keepalived was set up on both HAProxy nodes for virtual IP failover. Certificates were generated and deployed to secure external connections.</p>
+
+<h2 id="cluster-boot-behavior">Cluster Boot Behavior</h2>
+
+<ul>
+  <li>The bootstrap node temporarily runs etcd, the API server, and initial operators.</li>
+  <li>Once the masters are healthy, ownership of the control plane is handed over.</li>
+  <li>The bootstrap node is no longer needed and can be wiped or repurposed.</li>
+</ul>
+
+<h2 id="node-specifications">Node Specifications</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Role</th>
+      <th>RAM</th>
+      <th>Disk</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Master</td>
+      <td>16 GB</td>
+      <td>500 GB</td>
+    </tr>
+    <tr>
+      <td>Worker</td>
+      <td>8 GB</td>
+      <td>100 GB</td>
+    </tr>
+    <tr>
+      <td>Infra</td>
+      <td>8 GB</td>
+      <td>100 GB</td>
+    </tr>
+    <tr>
+      <td>Bootstrap</td>
+      <td>8 GB</td>
+      <td>100 GB</td>
+    </tr>
+    <tr>
+      <td>Bastion</td>
+      <td>8 GB</td>
+      <td>100 GB</td>
+    </tr>
+    <tr>
+      <td>HAProxy</td>
+      <td>8 GB</td>
+      <td>100 GB</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="based-on">Based On</h2>
+
+<p>This deployment was based on an internal OpenShift UPI, Air-Gap, vSphere guide, compiled from a series of practical instructions and private support materials provided by Red Hat.</p>
+
+<ul>
+  <li>Registry mirroring</li>
+  <li>Apache + DNS + HA setup</li>
+  <li>Two-node HAProxy load balancing and VIP failover for external reachability</li>
+  <li>Custom DNS names for OpenShift Ingress, API, and cluster applications</li>
+  <li>Certificate generation and trust configuration for secure external access</li>
+  <li>Fully air-gapped installation and manual day-one validation</li>
+</ul>
+
+
+        
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+
+
+      </footer>
+
+      
+
+<section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://bsky.app/intent/compose?text=http://localhost:4000/portfolio/openshift_upi_airgap_portfolio/" class="btn btn--bluesky" title="Share on Bluesky"><i class="fab fa-bluesky" aria-hidden="true"></i><span> Bluesky</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/portfolio/openshift_upi_airgap_portfolio/" class="btn btn--facebook" title="Share on Facebook"><i class="fab fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4000/portfolio/openshift_upi_airgap_portfolio/" class="btn btn--linkedin" title="Share on LinkedIn"><i class="fab fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+
+  <a href="https://x.com/intent/post?text=http://localhost:4000/portfolio/openshift_upi_airgap_portfolio/" class="btn btn--x" title="Share on X"><i class="fab fa-x-twitter" aria-hidden="true"></i><span> X (formerly Twitter)</span></a>
+</section>
+
+
+      
+
+
+  <nav class="pagination">
+    
+      <a href="#" class="pagination--pager disabled">Previous</a>
+    
+    
+      <a href="http://localhost:4000/portfolio/rag_pipeline_article/" class="pagination--pager" title="End-to-End RAG Architecture for GitLab-Driven Code Embedding and Retrieval in VSCode
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+<a href="/sitemap/">Sitemap</a>
+<!-- end custom footer snippets -->
+
+        
+
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+    
+      <li><a href="http://github.com/QuarkCharmS"><i class="fab fa-github" aria-hidden="true"></i> GitHub</a></li>
+    
+    
+    
+    <li><a href="http://localhost:4000/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">
+  &copy; 2025 Santiago Velázquez, Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://github.com/academicpages/academicpages.github.io">AcademicPages</a>, a fork of <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.<br />
+  Site last updated 2025-07-29
+</div>
+
+      </footer>
+    </div>
+
+    <script src="http://localhost:4000/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+  </body>
+</html>
+

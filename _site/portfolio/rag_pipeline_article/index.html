@@ -1,0 +1,590 @@
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+
+<meta charset="utf-8">
+
+
+
+<!-- begin SEO -->
+
+
+
+
+
+
+
+
+
+<title>End-to-End RAG Architecture for GitLab-Driven Code Embedding and Retrieval in VSCode - Santiago Velázquez</title>
+
+
+
+
+
+
+
+
+
+
+  <link rel="canonical" href="http://localhost:4000/portfolio/rag_pipeline_article/">
+
+
+
+
+
+  
+
+  
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context" : "http://schema.org",
+      "@type" : "Person",
+      "name" : "Santiago Velázquez",
+      "url" : "http://localhost:4000",
+      "sameAs" : null
+    }
+  </script>
+
+
+
+
+
+
+<!-- end SEO -->
+
+<!-- Open Graph protocol data (https://ogp.me/), used by social media -->
+<meta property="og:locale" content="en-US">
+<meta property="og:site_name" content="Santiago Velázquez"> 
+<meta property="og:title" content="End-to-End RAG Architecture for GitLab-Driven Code Embedding and Retrieval in VSCode">
+
+
+  <meta property="og:description" name="description" content="Real-time RAG pipeline for GitLab codebases with Qdrant and Qwen3, integrated into VSCode.">
+
+
+  <meta property="og:url" content="http://localhost:4000/portfolio/rag_pipeline_article/">
+
+
+
+
+
+<!-- end Open Graph protocol -->
+
+<link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="Santiago Velázquez Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://localhost:4000/assets/css/main.css">
+
+<meta http-equiv="cleartype" content="on">
+    
+
+<!-- start custom head snippets -->
+
+<!-- favicon from https://commons.wikimedia.org/wiki/File:OOjs_UI_icon_academic-progressive.svg -->
+<link rel="apple-touch-icon" sizes="180x180" href="http://localhost:4000/images/apple-touch-icon-180x180.png"/>
+<link rel="icon" type="image/svg+xml" href="http://localhost:4000/images/favicon.svg"/>
+<link rel="icon" type="image/png" href="http://localhost:4000/images/favicon-32x32.png" sizes="32x32"/>
+<link rel="icon" type="image/png" href="http://localhost:4000/images/favicon-192x192.png" sizes="192x192"/>
+<link rel="manifest" href="http://localhost:4000/images/manifest.json"/>
+<link rel="icon" href="/images/favicon.ico"/>
+<meta name="theme-color" content="#ffffff"/>
+<link rel="stylesheet" href="http://localhost:4000/assets/css/academicons.css"/>
+
+
+<!-- Support for MatJax -->
+<script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <button><div class="navicon"></div></button>
+        <ul class="visible-links">
+          <li class="masthead__menu-item masthead__menu-item--lg persist"><a href="http://localhost:4000/">Santiago Velázquez</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/portfolio/">Portfolio</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/cv/">CV</a></li>
+          
+          <li id="theme-toggle" class="masthead__menu-item persist tail">
+            <a><i id="theme-icon" class="fa-solid fa-sun" aria-hidden="true" title="toggle theme"></i></a>
+          </li>
+        </ul>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    
+
+
+
+
+
+<div id="main" role="main">
+  
+
+
+  <div class="sidebar sticky">
+  
+
+
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  <div class="author__avatar">
+    
+    	<img src="http://localhost:4000/images/avatar.jpg" class="author__avatar" alt="Santiago Veláquez">
+    
+  </div>
+
+  <div class="author__content">
+    <h3 class="author__name">Santiago Veláquez</h3>
+    
+    <p class="author__bio">Platform DevOps engineer. Formerly serving in the IDF's Matzov Unit.</p>
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      <!-- Font Awesome icons / Biographic information  -->
+      
+        <li class="author__desktop"><i class="fas fa-fw fa-location-dot icon-pad-right" aria-hidden="true"></i>Tel Aviv, Israel</li>
+      
+      
+        <li class="author__desktop"><i class="fas fa-fw fa-building-columns icon-pad-right" aria-hidden="true"></i>Open to opportunitties</li>
+      
+      
+      
+        <li><a href="mailto:santivelazqueziusim@gmail.com"><i class="fas fa-fw fa-envelope icon-pad-right" aria-hidden="true"></i>Email</a></li>
+      
+
+      <!-- Font Awesome and Academicons icons / Academic websites -->
+      
+            
+      
+      
+      
+      
+                              
+      
+      
+
+      <!-- Font Awesome icons / Repositories and software development -->
+      
+            
+            
+      
+        <li><a href="https://github.com/QuarkCharmS"><i class="fab fa-fw fa-github icon-pad-right" aria-hidden="true"></i>GitHub</a></li>
+      
+            
+            
+
+      <!-- Font Awesome icons / Social media -->
+      
+      
+            
+      
+                  
+                  
+      
+            
+            
+      
+        <li><a href="https://www.linkedin.com/in/santiago-velazquez-iusim"><i class="fab fa-fw fa-linkedin icon-pad-right" aria-hidden="true"></i>LinkedIn</a></li>
+            
+      
+            
+                  
+            
+      
+            
+            
+      
+              
+      
+                      
+      
+      
+            
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="End-to-End RAG Architecture for GitLab-Driven Code Embedding and Retrieval in VSCode">
+    <meta itemprop="description" content="Real-time RAG pipeline for GitLab codebases with Qdrant and Qwen3, integrated into VSCode.">
+    
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 class="page__title" itemprop="headline">End-to-End RAG Architecture for GitLab-Driven Code Embedding and Retrieval in VSCode
+</h1>
+          
+        
+        
+            
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        <hr />
+
+<p>A client approached me with a request: they wanted to implement a Retrieval-Augmented Generation (RAG) system capable of answering questions directly from their GitLab-hosted source code. Since our unit handles multiple clients with similar needs, I designed a generalized, scalable solution—one that automatically transforms GitLab repositories into embedded vector databases accessible through real-time queries in VSCode. What follows is a detailed breakdown of the system architecture and implementation.</p>
+
+<h2 id="overview">Overview</h2>
+
+<p>This article documents a complete Retrieval-Augmented Generation (RAG) pipeline designed to ingest, embed, and serve GitLab-hosted code repositories as queryable vector databases directly within VSCode. The system is optimized for automation, minimal resource consumption, and real-time access during development workflows.</p>
+
+<h2 id="use-case">Use Case</h2>
+
+<p>This system is ideal for teams working with large codebases who want to enable natural language understanding of source code. Instead of manually searching through files or relying on static documentation, developers can ask semantic questions directly inside VSCode and receive contextually relevant results in real-time.</p>
+
+<h2 id="objectives">Objectives</h2>
+
+<ul>
+  <li>Enable VSCode to query embedded source code with rich semantic context.</li>
+  <li>Automate repo updates through GitLab push events.</li>
+  <li>Avoid reprocessing unchanged files.</li>
+  <li>Provide low-latency retrieval via FastAPI and Qdrant.</li>
+</ul>
+
+<h2 id="key-challenges">Key Challenges</h2>
+
+<ul>
+  <li><strong>Avoiding redundant embeddings</strong>: Solved using content-based UUIDv5 hashing and chunk-level diffing.</li>
+  <li><strong>Handling large repositories</strong>: Implemented lazy chunking + batch embedding with streaming upload to Qdrant.</li>
+</ul>
+
+<h2 id="stack">Stack</h2>
+
+<ul>
+  <li><strong>Backend Language</strong>: Python</li>
+  <li><strong>Database</strong>: Qdrant (Vector DB)</li>
+  <li><strong>Embedder</strong>: Qwen3-Embedding:8B (via HTTP API)</li>
+  <li><strong>LLM Model</strong>: LLaMA3:70B (via HTTP API)</li>
+  <li><strong>Automation</strong>: n8n (CI orchestrator)</li>
+  <li><strong>Editor Integration</strong>: Continue plugin in VSCode</li>
+  <li><strong>Web Service</strong>: FastAPI</li>
+</ul>
+
+<hr />
+
+<h2 id="system-architecture">System Architecture</h2>
+
+<p><img src="/images/rag.png" alt="Rag Workflow Diagram" /></p>
+
+<h3 id="diagram">Diagram</h3>
+
+<p>Refer to the included diagram that maps the entire data flow from GitLab to Qdrant and VSCode. It includes the following core components:</p>
+
+<ul>
+  <li>GitLab Repo</li>
+  <li>n8n CI Flow</li>
+  <li>Embed Script + embed_api</li>
+  <li>Qwen3-Embedding API</li>
+  <li>Qdrant Vector DB</li>
+  <li>Continue Plugin (VSCode)</li>
+  <li>FastAPI (/context endpoint)</li>
+</ul>
+
+<hr />
+
+<h2 id="component-breakdown">Component Breakdown</h2>
+
+<h3 id="1-gitlab-repo">1. GitLab Repo</h3>
+
+<p>The source of truth for all code artifacts. Each time a user pushes code, it triggers a webhook (or poll-based) event that is captured by n8n.</p>
+
+<hr />
+
+<h3 id="2-n8n-automation-layer">2. n8n Automation Layer</h3>
+
+<p>This orchestrates the entire embedding pipeline. On a GitLab push event:</p>
+
+<ul>
+  <li>Clones/pulls the updated repository.</li>
+  <li>Runs the embedding script (main Python program).</li>
+</ul>
+
+<p>This ensures your vector DB reflects the latest state of the codebase with no manual intervention.</p>
+
+<hr />
+
+<h3 id="3-embedding-logic-python-backend">3. Embedding Logic (Python Backend)</h3>
+
+<h4 id="directory-structure">Directory Structure</h4>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">main.py</code>: Entry script that walks the repo and determines which files changed.</li>
+  <li><code class="language-plaintext highlighter-rouge">embed_api/</code>:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">embedFile</code>: Handles chunking, deduplication, file-level embedding.</li>
+      <li><code class="language-plaintext highlighter-rouge">chunk</code>: Creates vector + metadata and uploads them.</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="optimization-features">Optimization Features</h4>
+
+<ul>
+  <li>Only processes new/updated files.</li>
+  <li>Skips already-embedded chunks by checking:
+    <ul>
+      <li>File hash (SHA-256)</li>
+      <li>Chunk hash</li>
+    </ul>
+  </li>
+  <li>Deletes chunks from Qdrant for files no longer present.</li>
+</ul>
+
+<h4 id="chunk-metadata-schema-in-qdrant">Chunk Metadata Schema in Qdrant</h4>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"UUIDv5(filepath_hash_chunk_index)"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"chunk_hash"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SHA-256"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"parent_filepath"</span><span class="p">:</span><span class="w"> </span><span class="s2">"relative/path/to/file"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"parent_file_hash"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SHA-256"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"text"</span><span class="p">:</span><span class="w"> </span><span class="s2">"raw chunk text"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"vector"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="err">...</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">size</span><span class="w"> </span><span class="mi">4096</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<hr />
+
+<h3 id="4-qwen3-embedding8b">4. Qwen3-Embedding:8B</h3>
+
+<p>This model is exposed via HTTP API and handles all embedding:</p>
+
+<ul>
+  <li>Embedding file chunks</li>
+  <li>Embedding user queries (via FastAPI)</li>
+</ul>
+
+<p>It returns a fixed-size (4096) vector representation.</p>
+
+<hr />
+
+<h3 id="5-qdrant-vector-database">5. Qdrant Vector Database</h3>
+
+<p>This serves as the persistent storage for all embedded vectors.</p>
+
+<ul>
+  <li>One collection per project/repo</li>
+  <li>Each vector includes full metadata</li>
+  <li>Fast top-K similarity search</li>
+</ul>
+
+<hr />
+
+<h3 id="6-fastapi-server-context-endpoint">6. FastAPI Server (/context Endpoint)</h3>
+
+<p>Handles semantic query requests from the Continue plugin in VSCode.</p>
+
+<h4 id="query-flow">Query Flow:</h4>
+
+<ol>
+  <li>Receives <code class="language-plaintext highlighter-rouge">query</code> and <code class="language-plaintext highlighter-rouge">collection</code> name</li>
+  <li>Embeds query using Qwen3-Embedding</li>
+  <li>Searches Qdrant for top-K matches</li>
+  <li>Returns matching chunks as JSON</li>
+</ol>
+
+<h4 id="sample-response">Sample Response:</h4>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"text"</span><span class="p">:</span><span class="w"> </span><span class="s2">"def process_file(self):</span><span class="se">\n</span><span class="s2"> ..."</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"filepath"</span><span class="p">:</span><span class="w"> </span><span class="s2">"src/embedder/embed_api.py"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.92</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="err">...</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre></div></div>
+
+<hr />
+
+<h3 id="7-vscode--continue-plugin">7. VSCode + Continue Plugin</h3>
+
+<p>Continue is configured to use the RAG system as a custom context provider.</p>
+
+<h4 id="configyaml"><code class="language-plaintext highlighter-rouge">config.yaml</code></h4>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="pi">-</span> <span class="na">provider</span><span class="pi">:</span> <span class="s">http</span>
+  <span class="na">params</span><span class="pi">:</span>
+    <span class="na">url</span><span class="pi">:</span> <span class="s2">"</span><span class="s">http://192.168.0.200:8080/context"</span>
+    <span class="na">title</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Qdrant</span><span class="nv"> </span><span class="s">Project-Name</span><span class="nv"> </span><span class="s">RAG"</span>
+    <span class="na">displayTitle</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Project-Name</span><span class="nv"> </span><span class="s">RAG"</span>
+    <span class="na">description</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Retrieve</span><span class="nv"> </span><span class="s">context</span><span class="nv"> </span><span class="s">from</span><span class="nv"> </span><span class="s">Qdrant</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">project</span><span class="nv"> </span><span class="s">&lt;blank&gt;"</span>
+    <span class="na">options</span><span class="pi">:</span>
+      <span class="na">collection</span><span class="pi">:</span> <span class="s2">"</span><span class="s">project-name"</span>
+</code></pre></div></div>
+
+<p>This enables project-aware, context-enriched completions inside the editor.</p>
+
+<hr />
+
+<h2 id="final-flow-summary">Final Flow Summary</h2>
+
+<ol>
+  <li>Developer pushes code to GitLab</li>
+  <li>n8n is triggered</li>
+  <li>Repo is pulled locally</li>
+  <li>Embedding script runs:
+    <ul>
+      <li>Chunks code</li>
+      <li>Embeds using Qwen3</li>
+      <li>Uploads new chunks to Qdrant</li>
+      <li>Removes stale chunks</li>
+    </ul>
+  </li>
+  <li>Developer uses VSCode</li>
+  <li>Continue sends query to FastAPI</li>
+  <li>FastAPI embeds query and fetches top-K chunks from Qdrant</li>
+  <li>Chunks appear in VSCode completions</li>
+</ol>
+
+<hr />
+
+<p>This system provides a developer-first, semantically aware code search pipeline built for real-time engineering workflows.</p>
+
+
+
+        
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+
+
+      </footer>
+
+      
+
+<section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://bsky.app/intent/compose?text=http://localhost:4000/portfolio/rag_pipeline_article/" class="btn btn--bluesky" title="Share on Bluesky"><i class="fab fa-bluesky" aria-hidden="true"></i><span> Bluesky</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/portfolio/rag_pipeline_article/" class="btn btn--facebook" title="Share on Facebook"><i class="fab fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4000/portfolio/rag_pipeline_article/" class="btn btn--linkedin" title="Share on LinkedIn"><i class="fab fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+
+  <a href="https://x.com/intent/post?text=http://localhost:4000/portfolio/rag_pipeline_article/" class="btn btn--x" title="Share on X"><i class="fab fa-x-twitter" aria-hidden="true"></i><span> X (formerly Twitter)</span></a>
+</section>
+
+
+      
+
+
+  <nav class="pagination">
+    
+      <a href="http://localhost:4000/portfolio/openshift_upi_airgap_portfolio/" class="pagination--pager" title="OpenShift 4 UPI Bare-Metal Installation (Air-Gapped, Disconnected)
+">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+<a href="/sitemap/">Sitemap</a>
+<!-- end custom footer snippets -->
+
+        
+
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+    
+      <li><a href="http://github.com/QuarkCharmS"><i class="fab fa-github" aria-hidden="true"></i> GitHub</a></li>
+    
+    
+    
+    <li><a href="http://localhost:4000/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">
+  &copy; 2025 Santiago Velázquez, Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://github.com/academicpages/academicpages.github.io">AcademicPages</a>, a fork of <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.<br />
+  Site last updated 2025-07-29
+</div>
+
+      </footer>
+    </div>
+
+    <script src="http://localhost:4000/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+  </body>
+</html>
+
