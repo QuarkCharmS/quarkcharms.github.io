@@ -1,6 +1,6 @@
 ---
 title: "OpenShift 4 UPI Bare-Metal Installation (Air-Gapped, Disconnected)"
-excerpt: "Fully air-gapped OpenShift 4.x cluster deployment using UPI on vSphere.<br/><img src='/images/openshift.png'>"
+excerpt: "Fully air-gapped OpenShift 4.x cluster deployment using UPI on vSphere."
 collection: portfolio
 ---
 ---
